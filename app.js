@@ -20,6 +20,7 @@ app.get("/addslap", async function (req, res, next) {
 });
 
 
+
 app.get("/slap", async function (req, res, next) {
   const results = await db.query(`SELECT slap FROM shouldIslaptable`);
   let number = results.rows[0].slap; 
