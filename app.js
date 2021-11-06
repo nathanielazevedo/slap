@@ -7,7 +7,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors())
-/** Add a new instructor. */
 
 /** Show JSON on instructor */
 
