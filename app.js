@@ -10,30 +10,34 @@ app.use(cors())
 
 /** Show JSON on instructor */
 
-app.get("/addslap", async function (req, res, next) {
-  const results = await db.query(`SELECT slap FROM shouldIslaptable`);
-  let number = results.rows[0].slap; 
-  number++ ;
-  await db.query(`UPDATE shouldIslaptable SET slap=${number} WHERE id = 1`); 
+app.get("/addslap/:name", async function (req, res, next) {
+  let name = req.params.name;
+  const results = await db.query(`INSERT INTO shouldIslaptable (name) VALUES ($1)`, [name]);
   return res.json({message: 'updated successfully'});
 });
 
 
 
 app.get("/slap", async function (req, res, next) {
-  const results = await db.query(`SELECT slap FROM shouldIslaptable`);
-  let number = results.rows[0].slap; 
-  if(number !== 0){
-    number--;
-    await db.query(`UPDATE shouldIslaptable SET slap=${number} WHERE id = 1`); 
+  const results = await db.query(`SELECT * FROM shouldIslaptable ORDER BY id asc`);
+  let nextone;
+  let all = results.rows; 
+  if(all.length !== 0){
+    nextone = results.rows[0];
+    await db.query(`DELETE FROM shouldislaptable WHERE id = $1`, [nextone.id]); 
+    return res.json(nextone)
+  } else{
+    return res.json(0)
   }
-  return res.json(results.rows[0].slap);
 });
 
 app.get('/', function(req, res) {
   return res.send('hey');
 });
 
-app.listen(process.env.PORT, function () {
+// app.listen(process.env.PORT, function () {
+//   console.log('App on port 3000');
+// });
+app.listen(3000, function () {
   console.log('App on port 3000');
 });
