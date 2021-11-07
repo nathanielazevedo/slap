@@ -35,9 +35,9 @@ app.get('/', function(req, res) {
   return res.send('hey');
 });
 
-// app.listen(process.env.PORT, function () {
-//   console.log('App on port 3000');
-// });
-app.listen(3000, function () {
+app.listen(process.env.PORT, function () {
   console.log('App on port 3000');
 });
+// app.listen(3000, function () {
+//   console.log('App on port 3000');
+// });
